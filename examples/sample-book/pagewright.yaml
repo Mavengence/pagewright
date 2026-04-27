@@ -1,0 +1,23 @@
+title: "The Pagewright Sample Book"
+author: "Pagewright Authors"
+theme: default
+subtitle: "A working example showing every Markdown feature Pagewright renders."
+
+parts:
+  - title: "Part I — Getting Started"
+    chapters:
+      - file: 01_introduction.md
+        title: "Introduction"
+        description: "What this sample shows and how to read it."
+      - file: 02_features.md
+        title: "Markdown Features"
+        description: "Headings, lists, tables, code blocks, links."
+
+  - title: "Part II — Authoring"
+    chapters:
+      - file: 03_callouts.md
+        title: "Callouts"
+        description: "All eight built-in callout types in one place."
+      - file: 04_writing.md
+        title: "Writing in Pagewright"
+        description: "Workflow tips, autosave, and conflict resolution."

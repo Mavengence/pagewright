@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pagewright"
+version = "0.1.0"
+description = "Local-first book editor for Markdown — CodeMirror left, true paged A4 preview right (paged.js)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Mavengence" },
+]
+keywords = [
+    "markdown",
+    "book",
+    "editor",
+    "paged-media",
+    "pagedjs",
+    "publishing",
+    "writing",
+    "a4",
+    "preview",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: News/Diary",
+    "Topic :: Text Processing :: Markup :: Markdown",
+    "Topic :: Text Editors",
+]
+dependencies = [
+    "Flask>=3.0",
+    "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "playwright>=1.40",
+    "ruff>=0.4",
+]
+
+[project.scripts]
+pagewright = "pagewright.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Mavengence/pagewright"
+Repository = "https://github.com/Mavengence/pagewright"
+Issues = "https://github.com/Mavengence/pagewright/issues"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["pagewright*"]
+
+[tool.setuptools.package-data]
+pagewright = [
+    "static/*",
+    "themes/**/*.css",
+    "themes/**/*.html",
+    "themes/**/*.yaml",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]

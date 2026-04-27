@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pagewright</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <!-- Vendor CSS first, our overrides last so .CodeMirror sizing wins. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/dialog/dialog.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div id="app">
+
+    <aside id="sidebar" aria-label="Books">
+      <div class="sidebar-header">
+        <span class="brand-mark" data-icon="brand" aria-hidden="true"></span>
+        <div class="brand-stack">
+          <span class="brand-name">Pagewright</span>
+          <span class="brand-sub">Editor</span>
+        </div>
+      </div>
+
+      <div class="sidebar-search">
+        <span class="search-icon" data-icon="search" data-icon-size="14" aria-hidden="true"></span>
+        <input type="search" id="search" placeholder="Filter chapters…" autocomplete="off" spellcheck="false">
+      </div>
+
+      <nav id="tree" aria-label="Chapter navigation">
+        <div class="skel-tree" id="tree-skeleton" aria-hidden="true">
+          <div class="skel-book">
+            <div class="skel skel-line med"></div>
+            <div class="skel skel-line short"></div>
+            <div class="skel-row"><div class="skel num"></div><div class="skel title"></div></div>
+            <div class="skel-row"><div class="skel num"></div><div class="skel title"></div></div>
+            <div class="skel-row"><div class="skel num"></div><div class="skel title"></div></div>
+          </div>
+          <div class="skel-book">
+            <div class="skel skel-line med"></div>
+            <div class="skel skel-line short"></div>
+            <div class="skel-row"><div class="skel num"></div><div class="skel title"></div></div>
+            <div class="skel-row"><div class="skel num"></div><div class="skel title"></div></div>
+            <div class="skel-row"><div class="skel num"></div><div class="skel title"></div></div>
+          </div>
+          <div class="skel-book">
+            <div class="skel skel-line med"></div>
+            <div class="skel skel-line short"></div>
+            <div class="skel-row"><div class="skel num"></div><div class="skel title"></div></div>
+            <div class="skel-row"><div class="skel num"></div><div class="skel title"></div></div>
+          </div>
+        </div>
+      </nav>
+
+      <section id="outline" class="outline" aria-label="Chapter outline" hidden>
+        <h3 class="outline-title">
+          <span data-icon="list-tree" data-icon-size="12"></span>
+          <span>Outline</span>
+        </h3>
+        <div id="outline-list"></div>
+      </section>
+
+      <div class="sidebar-footer">
+        <span class="hint"><span class="kbd">⌘</span><span class="kbd">S</span>&nbsp;save</span>
+        <span class="hint"><span class="kbd">⌘</span><span class="kbd">K</span>&nbsp;jump</span>
+        <span class="hint"><span class="kbd">⌘</span><span class="kbd">\</span>&nbsp;sidebar</span>
+      </div>
+    </aside>
+
+    <main id="workspace">
+      <header id="topbar">
+        <button
+          id="sidebar-toggle"
+          type="button"
+          class="icon-btn"
+          aria-label="Toggle sidebar"
+          data-tooltip="Toggle sidebar"
+          data-shortcut="⌘\"
+        >
+          <span data-icon-collapse data-icon="panel-left-close" data-icon-size="17"></span>
+          <span data-icon-expand data-icon="panel-left-open" data-icon-size="17"></span>
+        </button>
+
+        <div class="crumbs">
+          <span id="crumb-book" class="crumb-book"></span>
+          <span class="crumb-sep" aria-hidden="true">›</span>
+          <span id="crumb-chapter" class="crumb-chapter"></span>
+        </div>
+
+        <div class="topbar-right">
+          <span id="last-saved" class="last-saved" hidden></span>
+
+          <span id="status" data-state="ready" aria-live="polite">
+            <span class="status-icon" data-icon-status="ready" data-icon="circle-filled" data-icon-size="8"></span>
+            <span class="status-icon" data-icon-status="modified" data-icon="circle-filled" data-icon-size="8"></span>
+            <span class="status-icon" data-icon-status="saving" data-icon="loader" data-icon-size="12"></span>
+            <span class="status-icon" data-icon-status="saved" data-icon="check" data-icon-size="12"></span>
+            <span class="status-icon" data-icon-status="error" data-icon="triangle-alert" data-icon-size="12"></span>
+            <span id="status-label">Ready</span>
+          </span>
+
+          <button
+            id="palette-btn"
+            type="button"
+            class="icon-btn"
+            aria-label="Jump to chapter"
+            data-tooltip="Jump to chapter"
+            data-shortcut="⌘K"
+          ><span data-icon="command" data-icon-size="15"></span></button>
+
+          <button
+            id="refresh-btn"
+            type="button"
+            class="icon-btn"
+            aria-label="Re-render preview"
+            data-tooltip="Re-render preview"
+          ><span data-icon="refresh-cw" data-icon-size="15"></span></button>
+
+          <button
+            id="theme-toggle"
+            type="button"
+            class="icon-btn"
+            aria-label="Toggle theme"
+            data-tooltip="Theme: Auto"
+          >
+            <span data-icon-theme="sun" data-icon="sun" data-icon-size="15"></span>
+            <span data-icon-theme="moon" data-icon="moon" data-icon-size="15"></span>
+            <span data-icon-theme="monitor" data-icon="monitor" data-icon-size="15"></span>
+          </button>
+
+          <button
+            id="help-btn"
+            type="button"
+            class="icon-btn"
+            data-tooltip="Keyboard shortcuts"
+            data-shortcut="?"
+            aria-label="Show keyboard shortcuts"
+          ><span data-icon="info" data-icon-size="15"></span></button>
+
+          <button
+            id="save-btn"
+            type="button"
+            data-tooltip="Save changes"
+            data-shortcut="⌘S"
+          >
+            <span data-icon="save" data-icon-size="14"></span>
+            <span>Save</span>
+          </button>
+        </div>
+      </header>
+
+      <div id="panes">
+        <section id="editor-pane" aria-label="Editor">
+          <div id="editor-toolbar">
+            <button class="tb-btn" data-action="bold"   type="button" data-tooltip="Bold"   data-shortcut="⌘B"><span data-icon="bold" data-icon-size="14"></span></button>
+            <button class="tb-btn" data-action="italic" type="button" data-tooltip="Italic" data-shortcut="⌘I"><span data-icon="italic" data-icon-size="14"></span></button>
+            <button class="tb-btn" data-action="h2"     type="button" data-tooltip="Heading 2"><span data-icon="heading-2" data-icon-size="14"></span></button>
+            <button class="tb-btn" data-action="h3"     type="button" data-tooltip="Heading 3"><span data-icon="heading-3" data-icon-size="14"></span></button>
+            <span class="toolbar-sep" aria-hidden="true"></span>
+            <button class="tb-btn" data-action="bullet"  type="button" data-tooltip="Bullet list"><span data-icon="list" data-icon-size="14"></span></button>
+            <button class="tb-btn" data-action="ordered" type="button" data-tooltip="Numbered list"><span data-icon="list-ordered" data-icon-size="14"></span></button>
+            <button class="tb-btn" data-action="task"    type="button" data-tooltip="Task list"><span data-icon="check-square" data-icon-size="14"></span></button>
+            <span class="toolbar-sep" aria-hidden="true"></span>
+            <button class="tb-btn" data-action="callout-tipp"    type="button" data-tooltip="Tipp callout"><span data-icon="lightbulb" data-icon-size="14"></span></button>
+            <button class="tb-btn" data-action="callout-achtung" type="button" data-tooltip="Achtung callout"><span data-icon="triangle-alert" data-icon-size="14"></span></button>
+            <button class="tb-btn" data-action="callout-prompt"  type="button" data-tooltip="Prompt-Vorlage"><span data-icon="terminal" data-icon-size="14"></span></button>
+            <button class="tb-btn" data-action="code"            type="button" data-tooltip="Code block"><span data-icon="code-2" data-icon-size="14"></span></button>
+            <span class="toolbar-spacer"></span>
+            <span id="word-count" class="word-count">0 W</span>
+          </div>
+          <div id="editor-host">
+            <textarea id="editor"></textarea>
+          </div>
+        </section>
+
+        <div id="resizer" role="separator" aria-orientation="vertical" tabindex="0" data-tooltip="Drag to resize · double-click to reset"></div>
+
+        <section id="preview-pane" aria-label="Live preview">
+          <div id="preview-header">
+            <div id="mode-toggle" class="seg-toggle" role="group" aria-label="Preview mode">
+              <button
+                class="seg-btn"
+                data-mode="continuous"
+                type="button"
+                data-tooltip="Continuous scrolling"
+              >
+                <span data-icon="scroll-text" data-icon-size="13"></span>
+                <span class="seg-label">Continuous</span>
+              </button>
+              <button
+                class="seg-btn"
+                data-mode="paged"
+                type="button"
+                data-tooltip="Paged · simulates PDF"
+              >
+                <span data-icon="book-open-text" data-icon-size="13"></span>
+                <span class="seg-label">Paged</span>
+              </button>
+            </div>
+            <div class="preview-meta">
+              <span id="page-count" class="page-count" hidden>
+                <span data-icon="files" data-icon-size="11"></span>
+                <span id="page-count-text">0 pages</span>
+              </span>
+              <div id="zoom-control" class="zoom-control" role="group" aria-label="Preview zoom">
+                <button
+                  id="zoom-out"
+                  type="button"
+                  class="zoom-btn"
+                  data-tooltip="Zoom out"
+                  data-shortcut="⌘−"
+                  aria-label="Zoom out"
+                ><span data-icon="minus" data-icon-size="12"></span></button>
+                <button
+                  id="zoom-fit"
+                  type="button"
+                  class="zoom-level"
+                  data-tooltip="Fit to width"
+                  data-shortcut="⌘0"
+                  aria-label="Fit preview to width"
+                ><span id="zoom-text">Fit</span></button>
+                <button
+                  id="zoom-in"
+                  type="button"
+                  class="zoom-btn"
+                  data-tooltip="Zoom in"
+                  data-shortcut="⌘+"
+                  aria-label="Zoom in"
+                ><span data-icon="plus" data-icon-size="12"></span></button>
+              </div>
+              <button
+                id="preview-open-btn"
+                type="button"
+                class="icon-btn icon-btn-sm"
+                data-tooltip="Open preview in new tab"
+                aria-label="Open preview in new tab"
+              ><span data-icon="maximize-2" data-icon-size="12"></span></button>
+            </div>
+          </div>
+          <div id="preview-loading" hidden>
+            <span class="spinner" aria-hidden="true"></span>
+            <span id="preview-loading-text">Rendering</span>
+          </div>
+          <div id="preview-wrap">
+            <iframe id="preview" title="Chapter preview" src="about:blank"></iframe>
+          </div>
+        </section>
+      </div>
+
+      <footer id="statusbar">
+        <span id="filepath" class="muted">
+          <span data-icon="file-text" data-icon-size="12"></span>
+          <span id="filepath-text">No file open</span>
+        </span>
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="reading-time" class="muted">0 min read</span>
+        <span class="spacer"></span>
+        <span id="position" class="muted">Ln 1, Col 1</span>
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="filesize" class="muted">0 chars</span>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Command palette -->
+  <div id="palette" hidden role="dialog" aria-label="Jump to chapter">
+    <div class="palette-card">
+      <div class="palette-input-wrap">
+        <span data-icon="search" data-icon-size="16" aria-hidden="true"></span>
+        <input type="text" id="palette-input" placeholder="Jump to a chapter…" autocomplete="off" spellcheck="false">
+      </div>
+      <ol id="palette-results" role="listbox"></ol>
+    </div>
+  </div>
+
+  <!-- Tooltip layer (positioned absolutely, populated by JS) -->
+  <div id="tooltip" class="tooltip" role="tooltip"></div>
+
+  <!-- Toast layer (top-right transient notifications, populated by JS) -->
+  <div id="toasts" class="toasts" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- Modal layer (confirmation dialogs, conflict resolution, help) -->
+  <div id="modal" class="modal" hidden role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-modal-dismiss></div>
+    <div class="modal-card" role="document">
+      <h2 id="modal-title" class="modal-title"></h2>
+      <div id="modal-body" class="modal-body"></div>
+      <div id="modal-actions" class="modal-actions"></div>
+    </div>
+  </div>
+
+  <!-- Help dialog content lives inside the modal at runtime. -->
+  <template id="help-template">
+    <div class="help-grid">
+      <div class="help-section">
+        <h3>Editing</h3>
+        <dl>
+          <dt><kbd>⌘</kbd><kbd>S</kbd></dt><dd>Save</dd>
+          <dt><kbd>⌘</kbd><kbd>B</kbd></dt><dd>Bold</dd>
+          <dt><kbd>⌘</kbd><kbd>I</kbd></dt><dd>Italic</dd>
+          <dt><kbd>⌘</kbd><kbd>F</kbd></dt><dd>Find in file</dd>
+        </dl>
+      </div>
+      <div class="help-section">
+        <h3>Navigation</h3>
+        <dl>
+          <dt><kbd>⌘</kbd><kbd>K</kbd></dt><dd>Jump to chapter</dd>
+          <dt><kbd>⌘</kbd><kbd>/</kbd></dt><dd>Focus filter</dd>
+          <dt><kbd>⌘</kbd><kbd>\</kbd></dt><dd>Toggle sidebar</dd>
+        </dl>
+      </div>
+      <div class="help-section">
+        <h3>Preview</h3>
+        <dl>
+          <dt><kbd>⌘</kbd><kbd>+</kbd></dt><dd>Zoom in</dd>
+          <dt><kbd>⌘</kbd><kbd>−</kbd></dt><dd>Zoom out</dd>
+          <dt><kbd>⌘</kbd><kbd>0</kbd></dt><dd>Fit width</dd>
+        </dl>
+      </div>
+      <div class="help-section">
+        <h3>Help</h3>
+        <dl>
+          <dt><kbd>?</kbd></dt><dd>Show this dialog</dd>
+          <dt><kbd>Esc</kbd></dt><dd>Close dialogs</dd>
+        </dl>
+      </div>
+    </div>
+  </template>
+
+  <!-- Icons must load before app.js -->
+  <script src="/static/icons.js"></script>
+
+  <!-- CodeMirror -->
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/markdown/markdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/yaml/yaml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/edit/closebrackets.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/search/searchcursor.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/search/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/dialog/dialog.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/addon/selection/active-line.js"></script>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

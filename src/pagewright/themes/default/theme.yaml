@@ -1,0 +1,15 @@
+name: default
+description: >
+  Clean, modern paper-on-cream theme with an ember accent. Good default
+  for non-fiction, technical books, and long-form essays. Ships eight
+  English callouts, no chapter opener.
+
+callouts:
+  - { label: "Note:",       css_class: "callout-note",       display: "Note" }
+  - { label: "Tip:",        css_class: "callout-tip",        display: "Tip" }
+  - { label: "Warning:",    css_class: "callout-warning",    display: "Warning" }
+  - { label: "Important:",  css_class: "callout-important",  display: "Important" }
+  - { label: "Example:",    css_class: "callout-example",    display: "Example" }
+  - { label: "Definition:", css_class: "callout-definition", display: "Definition" }
+  - { label: "Quote:",      css_class: "callout-quote",      display: "Quote" }
+  - { label: "Code:",       css_class: "callout-code",       display: "Code" }

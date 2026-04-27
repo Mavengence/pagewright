@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/Mavengence/pagewright/tree/main/docs
+    about: Theme guide, configuration reference, architecture notes
+  - name: Discussions
+    url: https://github.com/Mavengence/pagewright/discussions
+    about: Open-ended questions, ideas, theme showcases

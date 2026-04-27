@@ -1,0 +1,79 @@
+name: Bug report
+description: Something works incorrectly. Crashes, wrong output, broken UI.
+title: "bug: <one-line summary>"
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. The more concrete the reproduction, the
+        faster the fix. Reading code beats reading prose.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear, concise description of the bug — what you saw vs. what you expected.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Minimal steps to reproduce. If a sample book triggers it, paste the relevant chapter or `pagewright.yaml` here.
+      placeholder: |
+        1. Run `pagewright examples/sample-book`
+        2. Click chapter 02
+        3. Paste this markdown into the editor:
+           ```
+           # heading
+           ...
+           ```
+        4. Observe the preview…
+    validations:
+      required: true
+
+  - type: input
+    id: pagewright-version
+    attributes:
+      label: Pagewright version
+      description: Output of `pagewright --version`.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+      placeholder: "3.12.0"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: "macOS 14.5 / Ubuntu 22.04 / Windows 11"
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser (if UI bug)
+      placeholder: "Chrome 124 / Safari 17.4 / Firefox 125"
+
+  - type: textarea
+    id: theme
+    attributes:
+      label: Theme + theme.yaml (if relevant)
+      description: Paste your theme.yaml + the relevant CSS rules if the bug touches rendering.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Server log + console errors
+      description: Paste output from the terminal running pagewright, plus any browser console errors.
+      render: shell

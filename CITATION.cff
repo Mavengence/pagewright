@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+title: "Pagewright: a local-first book editor for Markdown"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - alias: "Mavengence"
+url: "https://github.com/Mavengence/pagewright"
+repository-code: "https://github.com/Mavengence/pagewright"
+license: MIT
+version: 0.1.0
+date-released: "2026-04-27"
+abstract: >
+  Pagewright is a local-first web editor for writing books, papers,
+  and long-form documents in Markdown. It pairs a CodeMirror editor
+  with a true paged A4 preview rendered via paged.js, so authors can
+  see page breaks update in real time as they write. Themes are plain
+  CSS with optional callout label overrides and chapter-opener
+  templates, making the same stylesheet drive both the live preview
+  and the final PDF render.
+keywords:
+  - markdown
+  - book editor
+  - paged.js
+  - paged media
+  - publishing
+  - typography
+  - long-form writing
+  - print CSS

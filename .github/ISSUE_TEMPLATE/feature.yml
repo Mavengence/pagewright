@@ -1,0 +1,47 @@
+name: Feature request
+description: A new capability you want Pagewright to gain.
+title: "feat: <one-line summary>"
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Pagewright stays small on purpose. The bar for new features is high —
+        the question we'll ask is "does this serve someone *writing a book*?"
+
+        Read the [README's "Not for"](../README.md#not-for) section first.
+        If your idea fits a "Use this instead" tool better, please file the
+        request there.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What can't you do today? Describe the *user-facing pain*, not the technical solution.
+    validations:
+      required: true
+
+  - type: textarea
+    id: who
+    attributes:
+      label: Who is this for?
+      description: |
+        Be concrete. "Book authors who…" or "Theme designers who…" or
+        "Publishers who…". Generic "all users" answers usually mean the
+        feature isn't well-scoped yet.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution (optional)
+      description: |
+        How might this work? Mock-ups, pseudo-code, API sketches all welcome.
+        It's fine to leave this blank if you only know the problem.
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What I tried / considered
+      description: Existing tools you tried, workarounds that didn't quite work, related GitHub issues.
