@@ -54,7 +54,7 @@ and long-form documents** where the printed page matters.
 | Writing notes / building a knowledge graph        | [Obsidian](https://obsidian.md), [Logseq](https://logseq.com) |
 | Writing a single-doc blog post                    | Any markdown editor; Pagewright is overkill.  |
 | Writing in LaTeX                                  | [Overleaf](https://overleaf.com)              |
-| Collaborating in real time with co-authors        | [Vivliostyle Pub](https://vivliostyle.pub), [Ketty](https://ketty.community/) |
+| Collaborating in real time with co-authors        | [Vivliostyle](https://vivliostyle.org), [Ketty](https://github.com/coko-foundation/ketty) |
 | Using Word and exporting to PDF                   | Word, then.                                   |
 
 ---
@@ -208,7 +208,7 @@ theme-author guide.
 
 ## How it compares
 
-|                              | Pagewright | pixel-and-paper | Vivliostyle Pub | Quarto / mdBook | Obsidian / Typora | Ketty / Editoria | Overleaf |
+|                              | Pagewright | pixel-and-paper | Vivliostyle  | Quarto / mdBook | Obsidian / Typora | Ketty / Editoria | Overleaf |
 |------------------------------|:---------:|:---------------:|:---------------:|:---------------:|:-----------------:|:----------------:|:--------:|
 | Markdown source              |    ✅     |       ✅        |    ✅ (VFM)     |       ✅        |        ✅         |    ❌ (Word)     | ❌ (TeX) |
 | Multi-chapter project        |    ✅     |  ⚠️ filenames  | ⚠️ single-doc  |       ✅        |     ⚠️ flat      |        ✅        |    ✅    |
@@ -226,9 +226,9 @@ save semantics, and an opinionated default theme.
 The closest neighbours each give up something Pagewright keeps:
 
 - [**pixel-and-paper**](https://github.com/the-coded-type/pixel-and-paper) — paged.js + local + markdown, but **bring your own editor** (the README literally says "use Obsidian or VS Code"). No project model beyond filename ordering.
-- [**Vivliostyle Pub**](https://vivliostyle.pub/) — editor + paged preview in one app, but **cloud-hosted** with GitHub login and effectively single-document.
+- [**Vivliostyle**](https://vivliostyle.org/) — paged-media engine + an authoring app (the [Pub editor](https://github.com/vivliostyle/vivliostyle.pub) was a cloud-hosted, single-document, GitHub-login interface; project is dormant).
 - [**Quarto**](https://quarto.org), [**mdBook**](https://rust-lang.github.io/mdBook/), [**Bookdown**](https://bookdown.org/), [**Honkit**](https://honkit.netlify.app/) — excellent CLI build tools, but **no live paged preview**. You edit, you re-build, you reload.
-- [**Ketty / Editoria**](https://ketty.community/) — production-grade book authoring for university presses, but **not Markdown** (Word import, ProseMirror) and a 10-microservice deploy.
+- [**Ketty / Editoria**](https://github.com/coko-foundation/ketty) — production-grade book authoring for university presses, but **not Markdown** (Word import, ProseMirror) and a 10-microservice deploy.
 
 ---
 
